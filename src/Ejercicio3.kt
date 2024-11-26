@@ -1,12 +1,18 @@
-import java.sql.SQLOutput
-
 fun main(){
+    codigo("{a + b [c] * (2x2)}}}}");
+    codigo("{ [ a * ( c + d ) ] - 5 }");
+    codigo("{ a * ( c + d ) ] - 5 }");
+    codigo("{a^4 + (((ax4)}");
+    codigo("{ ] a * ( c + d ) + ( 2 - 3 )[ - 5 }");
+    codigo("{{{{{{(}}}}}}");
+    codigo("(a");
+}
 
-    var expresion:String = "{ ] a * ( c + d ) + ( 2 - 3 )[ - 5 }";
+fun codigo(expresion:String){
     var balanceada:Boolean = false;
-    var delimitadores: MutableList<Char> = mutableListOf()
+    val delimitadores = mutableListOf<Char>()
     var contador:Int = 0;
-    var contadorMax:Int = expresion.length - 1;
+    val contadorMax:Int = expresion.length - 1;
     while (contador <= contadorMax){
         when(expresion.get(contador)){
             '{' -> delimitadores.add(expresion.get(contador))
@@ -18,36 +24,34 @@ fun main(){
         }
         contador++;
     }
-    println(delimitadores)
-    var contadorResta:Int = delimitadores.size ;
-    var comparador:Int = delimitadores.size ;
 
+    val totalSizeLista:Int = delimitadores.size ;
+    var comparadorLista:Int = 0;
     if(delimitadores.size % 2 != 0){
-        println("Falta alguna llave de apertura o de cierre")
-    }
-    for (i in 0..delimitadores.size){
-        if((delimitadores.get(i) == '{') && (delimitadores.get(contadorResta) == '}')){
-            delimitadores.removeAt(i)
-            delimitadores.removeAt(contadorResta)
-            contadorResta--;
-            contador++;
-        } else if((delimitadores.get(i) == '[') && (delimitadores.get(contadorResta) == ']')){
-            delimitadores.removeAt(i)
-            delimitadores.removeAt(contadorResta)
-            contadorResta--;
-            contador++;
-        } else if((delimitadores.get(i) == '(') && (delimitadores.get(contadorResta) == ')')){
-            delimitadores.removeAt(i)
-            delimitadores.removeAt(contadorResta)
-            contadorResta--;
-            contador++;
+        balanceada = false;
+        println("$expresion ¿está balanceada? $balanceada");
+    } else {
+        var c: Int = 0;
+        while(c < delimitadores.size - 1){
+            if((delimitadores.get(c) == '{') && (delimitadores.get(c + 1) == '}') ||
+                (delimitadores.get(c) == '[') && (delimitadores.get(c + 1) == ']') ||
+                (delimitadores.get(c) == '(') && (delimitadores.get(c + 1) == ')')) {
+                delimitadores.removeAt(c);
+                delimitadores.removeAt(c);
+                comparadorLista++;
+                c = 0;
+            } else {
+                c++;
+            }
         }
-    }
 
-    if (contador == (comparador / 2)){
-        println("true")
-    } else{
-        println("false")
+        if (comparadorLista == (totalSizeLista / 2)){
+            balanceada = true
+            println("$expresion ¿está balanceada? $balanceada");
+        } else{
+            balanceada = false;
+            println("$expresion ¿está balanceada? $balanceada");
+        }
     }
 
 }
