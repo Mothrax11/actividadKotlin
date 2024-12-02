@@ -1,5 +1,3 @@
-import java.awt.print.Printable
-
 fun main() {
     var listaTotal:MutableList<MutableList<String>> = mutableListOf()
     var fila1:MutableList<String> = mutableListOf("O", "O", "")
